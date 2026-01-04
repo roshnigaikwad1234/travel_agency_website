@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages | TravelGo</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-[Poppins] antialiased body-bg">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="text-2xl font-bold text-primary-600"><i class="fas fa-plane-departure"></i> Vibe It</div>
+            <ul class="flex space-x-6">
+                <li><a href="index.html" class="text-gray-700 hover:text-primary-600 transition duration-300">Home</a></li>
+                <li><a href="destinations.html" class="text-gray-700 hover:text-primary-600 transition duration-300">Destinations</a></li>
+                <!-- Packages nav removed (you're on Packages page) -->
+                <li><a href="booking.html" class="text-gray-700 hover:text-primary-600 transition duration-300">Booking</a></li>
+                <li><a href="contact.html" class="text-gray-700 hover:text-primary-600 transition duration-300">Contact</a></li>
+                <li><a href="login.html" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition duration-300">Login / Register</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-10">Our Amazing Travel Packages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-youtube text-xl"></i></a>
+            </div>
+            <div class="flex justify-center space-x-6 mb-4 text-gray-400 text-sm">
+                <a href="index.html" class="hover:text-white transition duration-300">Home</a>
+                <a href="destinations.html" class="hover:text-white transition duration-300">Destinations</a>
+                <li><a href="packages.html" class="text-primary-600 font-semibold">Packages</a></li>
+                <a href="booking.html" class="hover:text-white transition duration-300">Booking</a>
+                <a href="contact.html" class="hover:text-white transition duration-300">Contact</a>
+            </div>
+            <p class="text-gray-500 text-sm">&copy; 2025 Vibe It. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = "http://localhost:5000/api/packages";
+        const packagesGrid = document.getElementById('packages-grid');
+
+        async function fetchPackages() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const packages = await response.json();
+                displayPackages(packages);
+            } catch (error) {
+                console.error("Error fetching packages:", error);
+                packagesGrid.innerHTML = '<p class="text-center text-red-500">Failed to load packages. Please try again later.</p>';
+            }
+        }
+
+        function displayPackages(packages) {
+            packagesGrid.innerHTML = ''; // Clear existing content
+            if (packages.length === 0) {
+                packagesGrid.innerHTML = '<p class="text-center text-gray-600">No packages available at the moment.</p>';
+                return;
+            }
+
+            packages.forEach(pkg => {
+                const packageCard = `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img src="${pkg.imageUrl || 'https://via.placeholder.com/400x250'}" alt="${pkg.name}" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">${pkg.name}</h3>
+                            <p class="text-gray-600 mb-4">${pkg.description}</p>
+                            <div class="flex items-center text-gray-500 text-sm mb-4">
+                                <span class="mr-4"><i class="fas fa-map-marker-alt text-indigo-500 mr-1"></i> ${pkg.destination}</span>
+                                <span class="mr-4"><i class="fas fa-clock text-indigo-500 mr-1"></i> ${pkg.duration} Days</span>
+                                <span><i class="fas fa-star text-yellow-500 mr-1"></i> ${pkg.rating || 'N/A'}</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-3xl font-bold text-indigo-600">$${pkg.price}</span>
+                                <a href="booking.html?packageId=${pkg._id}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                packagesGrid.innerHTML += packageCard;
+            });
+        }
+
+        // Fetch packages when the page loads
+        document.addEventListener('DOMContentLoaded', fetchPackages);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

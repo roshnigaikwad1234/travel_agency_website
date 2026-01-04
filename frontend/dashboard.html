@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard · Vibe It Travel Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#ff8a00',
+              600: '#ff7a00',
+              700: '#e66d00',
+              900: '#b24f00'
+            },
+            secondary: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#2e7d32',
+              600: '#1b5e20'
+            }
+          },
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-poppins body-bg min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="dashboard.html" class="flex items-center space-x-2">
+          <i class="fas fa-plane text-2xl text-primary-600"></i>
+          <span class="text-2xl font-bold text-gray-900">Vibe It</span>
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="navlink text-gray-700 hover:text-primary-600 transition duration-300 font-medium">Home</a>
+          <a href="#destinations" class="navlink text-gray-700 hover:text-primary-600 transition duration-300 font-medium">Destinations</a>
+          <a href="#packages" class="navlink text-gray-700 hover:text-primary-600 transition duration-300 font-medium">Packages</a>
+          <a href="#booking" class="navlink text-gray-700 hover:text-primary-600 transition duration-300 font-medium">Booking</a>
+          <a href="#contact" class="navlink text-gray-700 hover:text-primary-600 transition duration-300 font-medium">Contact</a>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="relative">
+          <button id="profileBtn" class="flex items-center space-x-2 bg-white border border-gray-200 text-primary-600 px-3 py-2 rounded-full hover:shadow-sm transition duration-200">
+            <i class="fas fa-user-circle text-xl"></i>
+            <span id="userName" class="hidden sm:inline font-medium"></span>
+            <i class="fas fa-chevron-down text-xs"></i>
+          </button>
+
+          <!-- Profile Dropdown Menu -->
+          <div id="profileMenu" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-200 p-4 z-50">
+            <div class="text-center pb-4 border-b border-gray-200">
+              <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-primary-600">
+                <i class="fas fa-user"></i>
+              </div>
+              <p id="profileName" class="text-lg font-semibold text-gray-900"></p>
+              <p id="profileEmail" class="text-sm text-gray-600 mt-1"></p>
+            </div>
+
+            <!-- Booking Status -->
+            <div class="py-4 border-b border-gray-200">
+              <h4 class="text-sm font-semibold text-gray-800 mb-3"><i class="fas fa-calendar-check mr-2 text-primary-600"></i>Booking Status</h4>
+              <div id="bookingStatus" class="space-y-2 max-h-48 overflow-y-auto">
+                <p class="text-xs text-gray-500 italic">Loading bookings...</p>
+              </div>
+            </div>
+
+            <!-- Logout -->
+            <button id="logoutBtn" class="w-full mt-4 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition duration-300 font-medium">
+              <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-gray-700 hover:text-primary-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-2">
+        <a href="#home" class="navlink block text-gray-700 hover:text-primary-600 py-2 font-medium">Home</a>
+        <a href="#destinations" class="navlink block text-gray-700 hover:text-primary-600 py-2 font-medium">Destinations</a>
+        <a href="#packages" class="navlink block text-gray-700 hover:text-primary-600 py-2 font-medium">Packages</a>
+        <a href="#booking" class="navlink block text-gray-700 hover:text-primary-600 py-2 font-medium">Booking</a>
+        <a href="#contact" class="navlink block text-gray-700 hover:text-primary-600 py-2 font-medium">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Home Section -->
+    <section id="home" class="mb-16 hidden section">
+      <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-2xl shadow-lg p-12 text-center">
+        <h1 class="text-5xl font-bold mb-4">Welcome to Your Dashboard</h1>
+        <p id="dashboardWelcome" class="text-xl opacity-90 mb-8"></p>
+        <p class="text-lg opacity-80">Explore packages, manage bookings, and plan your next adventure!</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-2"><i class="fas fa-map"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900">Destinations</h3>
+          <p class="text-gray-600 text-sm mt-1">Explore 50+ destinations</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-2"><i class="fas fa-box"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900">Packages</h3>
+          <p class="text-gray-600 text-sm mt-1">Browse curated packages</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-2"><i class="fas fa-calendar-alt"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900">Bookings</h3>
+          <p class="text-gray-600 text-sm mt-1">Manage your trips</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-2"><i class="fas fa-headset"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900">Support</h3>
+          <p class="text-gray-600 text-sm mt-1">24/7 customer care</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="mb-16 hidden section">
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">Popular Destinations</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="group cursor-pointer">
+          <div class="relative overflow-hidden rounded-2xl shadow-lg transform group-hover:scale-105 transition duration-300">
+            <img src="images/tajmahal.png.jpg" alt="Taj Mahal" class="w-full h-64 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+              <h3 class="text-2xl font-bold mb-1">Taj Mahal</h3>
+              <p class="text-lg opacity-90">Agra, Uttar Pradesh</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group cursor-pointer">
+          <div class="relative overflow-hidden rounded-2xl shadow-lg transform group-hover:scale-105 transition duration-300">
+            <img src="images/kerlawaters.jpg" alt="Kerala Backwaters" class="w-full h-64 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+              <h3 class="text-2xl font-bold mb-1">Kerala Backwaters</h3>
+              <p class="text-lg opacity-90">Alleppey, Kerala</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group cursor-pointer">
+          <div class="relative overflow-hidden rounded-2xl shadow-lg transform group-hover:scale-105 transition duration-300">
+            <img src="images/kokan.jpg" alt="Goa Beaches" class="w-full h-64 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+              <h3 class="text-2xl font-bold mb-1">Goa Beaches</h3>
+              <p class="text-lg opacity-90">South Goa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="mb-16 hidden section">
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">Available Packages</h2>
+      <div id="packagesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <p class="text-gray-500">Loading packages...</p>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="mb-16 hidden section">
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">Book Your Trip</h2>
+      <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <form id="bookingForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <input id="bname" type="text" placeholder="Your full name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input id="bemail" type="email" placeholder="your@email.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Phone (10 digits)</label>
+            <input id="bphone" type="tel" placeholder="9876543210" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Select Package</label>
+            <select id="bpackage" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+              <option value="">Choose a package...</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Number of People</label>
+              <input id="bpeople" type="number" min="1" value="1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Travel Date</label>
+              <input id="bdate" type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Message (Optional)</label>
+            <textarea id="bmessage" placeholder="Any special requests?" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition duration-300 font-semibold text-lg">
+            <i class="fas fa-check-circle mr-2"></i>Complete Booking
+          </button>
+          <div id="bookingMsg" class="text-center mt-4"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="mb-16 hidden section">
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">Contact Us</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-4"><i class="fas fa-phone"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
+          <p class="text-gray-600">+91 12345 67890</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-4"><i class="fas fa-envelope"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Email</h3>
+          <p class="text-gray-600">info@vibeit.com</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <div class="text-4xl text-primary-600 mb-4"><i class="fas fa-map-marker-alt"></i></div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Location</h3>
+          <p class="text-gray-600">Mumbai, India</p>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <form id="contactForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+            <input id="cname" type="text" placeholder="Your name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input id="cemail" type="email" placeholder="your@email.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+            <textarea id="cmessage" placeholder="Your message..." rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition duration-300 font-semibold text-lg">
+            <i class="fas fa-paper-plane mr-2"></i>Send Message
+          </button>
+          <div id="contactMsg" class="text-center mt-4"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <i class="fas fa-plane text-2xl text-primary-400"></i>
+            <span class="text-2xl font-bold">Vibe It</span>
+          </div>
+          <p class="text-gray-400">Your gateway to extraordinary travel experiences across India.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#home" class="hover:text-white transition">Home</a></li>
+            <li><a href="#destinations" class="hover:text-white transition">Destinations</a></li>
+            <li><a href="#packages" class="hover:text-white transition">Packages</a></li>
+            <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Popular Destinations</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition">Taj Mahal</a></li>
+            <li><a href="#" class="hover:text-white transition">Kerala Backwaters</a></li>
+            <li><a href="#" class="hover:text-white transition">Goa Beaches</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-primary-400 transition"><i class="fab fa-facebook-f text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-primary-400 transition"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-primary-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-primary-400 transition"><i class="fab fa-youtube text-xl"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Vibe It Travel Agency. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+const API = "http://localhost:5000/api";
+
+// Auth check
+const user = JSON.parse(localStorage.getItem('vibe_user') || 'null');
+if (!user) window.location.href = 'login.html';
+
+// Display user info
+document.getElementById('userName').textContent = user.name;
+document.getElementById('profileName').textContent = user.name;
+document.getElementById('profileEmail').textContent = user.email;
+document.getElementById('dashboardWelcome').textContent = `Welcome back, ${user.name}! 👋`;
+
+// Profile dropdown toggle
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+profileBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  profileMenu.classList.toggle('hidden');
+});
+document.addEventListener('click', function() { profileMenu.classList.add('hidden'); });
+
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileMenuBtn?.addEventListener('click', function() {
+  mobileMenu.classList.toggle('hidden');
+});
+
+// Section navigation
+document.querySelectorAll('.navlink').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = this.getAttribute('href').substring(1);
+    showSection(target);
+    mobileMenu?.classList.add('hidden');
+  });
+});
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.getElementById(name)?.classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // If user navigates to packages and packages are not loaded yet, load them
+  if(name === 'packages'){
+    const grid = document.getElementById('packagesGrid');
+    if(grid && (grid.children.length === 0 || grid.innerHTML.includes('Loading'))) loadPackages();
+  }
+}
+
+// Show home section on load
+showSection('home');
+
+// Load packages
+async function loadPackages() {
+  try {
+    const res = await fetch(`${API}/packages`);
+    const packages = await res.json();
+    const grid = document.getElementById('packagesGrid');
+    const select = document.getElementById('bpackage');
+    
+    grid.innerHTML = '';
+    select.innerHTML = '<option value="">Choose a package...</option>';
+    if(!packages || packages.length === 0) {
+      displaySamplePackages();
+      return;
+    }
+
+    packages.forEach(pkg => {
+      // Add to grid
+      const card = document.createElement('div');
+      card.className = 'bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300';
+      card.innerHTML = `
+        <img src="${pkg.imageUrl || 'https://via.placeholder.com/400x250'}" alt="${pkg.name}" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">${pkg.name}</h3>
+          <p class="text-gray-600 mb-4 line-clamp-2">${pkg.description || 'Beautiful destination'}</p>
+          <div class="flex justify-between items-center">
+            <span class="text-2xl font-bold text-primary-600">₹${pkg.price}</span>
+            <span class="text-sm text-gray-500"><i class="fas fa-calendar mr-1"></i>${pkg.duration || 5} days</span>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+
+      // Add to select
+      const option = document.createElement('option');
+      option.value = pkg.name;
+      option.textContent = `${pkg.name} — ₹${pkg.price}`;
+      select.appendChild(option);
+    });
+  } catch (err) {
+    console.error('Error loading packages:', err);
+    // Fallback to sample packages when API fails
+    displaySamplePackages();
+  }
+}
+
+function displaySamplePackages(){
+  const samplePackages = [
+    { name: "Taj Mahal Tour", price: "4999", description: "Experience the beauty of the Taj Mahal", imageUrl: "images/tajmahal.png.jpg", duration: 3 },
+    { name: "Goa Beach Holiday", price: "6999", description: "Relax on the pristine beaches of Goa", imageUrl: "images/kokan.jpg", duration: 5 },
+    { name: "Kerala Backwaters", price: "8999", description: "Cruise through serene Kerala backwaters", imageUrl: "images/kerlawaters.jpg", duration: 4 }
+  ];
+  const grid = document.getElementById('packagesGrid');
+  const select = document.getElementById('bpackage');
+  grid.innerHTML = '';
+  select.innerHTML = '<option value="">Choose a package...</option>';
+  samplePackages.forEach(pkg => {
+    const card = document.createElement('div');
+    card.className = 'bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300';
+    card.innerHTML = `
+      <img src="${pkg.imageUrl}" alt="${pkg.name}" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">${pkg.name}</h3>
+        <p class="text-gray-600 mb-4">${pkg.description}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-2xl font-bold text-primary-600">₹${pkg.price}</span>
+          <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i>${pkg.duration} days</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    const option = document.createElement('option');
+    option.value = pkg.name;
+    option.textContent = `${pkg.name} — ₹${pkg.price}`;
+    select.appendChild(option);
+  });
+}
+
+// Load user bookings
+async function loadBookings() {
+  try {
+    const res = await fetch(`${API}/bookings`);
+    const bookings = await res.json();
+    const statusDiv = document.getElementById('bookingStatus');
+    
+    if (bookings && bookings.length > 0) {
+      statusDiv.innerHTML = bookings.map(b => `
+        <div class="bg-gray-50 p-2 rounded text-xs border-l-4 border-primary-600">
+          <p class="font-semibold text-gray-900">${b.package || 'Package'}</p>
+          <p class="text-gray-600">Date: ${new Date(b.date).toLocaleDateString()}</p>
+          <p class="text-gray-600">People: ${b.people || 1}</p>
+          <span class="inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium ${b.status === 'confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+            ${b.status || 'Pending'}
+          </span>
+        </div>
+      `).join('');
+    } else {
+      statusDiv.innerHTML = '<p class="text-xs text-gray-500 italic">No bookings yet</p>';
+    }
+  } catch (err) {
+    console.error('Error loading bookings:', err);
+    document.getElementById('bookingStatus').innerHTML = '<p class="text-xs text-gray-500 italic">No bookings</p>';
+  }
+}
+
+// Booking form submit
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('bname').value.trim();
+  const email = document.getElementById('bemail').value.trim();
+  const phone = document.getElementById('bphone').value.trim();
+  const pkg = document.getElementById('bpackage').value;
+  const people = Number(document.getElementById('bpeople').value);
+  const date = document.getElementById('bdate').value;
+  const message = document.getElementById('bmessage').value;
+  const msg = document.getElementById('bookingMsg');
+
+  if (!/^\d{10}$/.test(phone)) { msg.innerHTML = '<span class="text-red-600 font-medium">Invalid phone number</span>'; return; }
+  if (!pkg) { msg.innerHTML = '<span class="text-red-600 font-medium">Select a package</span>'; return; }
+
+  try {
+    const res = await fetch(`${API}/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, package: pkg, people, date, message })
+    });
+    if (res.ok) {
+      msg.innerHTML = '<span class="text-green-600 font-medium"><i class="fas fa-check-circle mr-2"></i>Booking successful!</span>';
+      document.getElementById('bookingForm').reset();
+      setTimeout(() => { msg.innerHTML = ''; }, 3000);
+      loadBookings();
+    } else {
+      const json = await res.json();
+      msg.innerHTML = `<span class="text-red-600 font-medium">${json.error || 'Booking failed'}</span>`;
+    }
+  } catch (err) {
+    msg.innerHTML = '<span class="text-red-600 font-medium">Server error</span>';
+  }
+});
+
+// Contact form submit
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('cname').value.trim();
+  const email = document.getElementById('cemail').value.trim();
+  const message = document.getElementById('cmessage').value;
+  const msg = document.getElementById('contactMsg');
+
+  try {
+    const res = await fetch(`${API}/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone: 'N/A', package: 'Contact', people: 0, date: new Date().toISOString(), message })
+    });
+    if (res.ok) {
+      msg.innerHTML = '<span class="text-green-600 font-medium"><i class="fas fa-check-circle mr-2"></i>Message sent successfully!</span>';
+      document.getElementById('contactForm').reset();
+      setTimeout(() => { msg.innerHTML = ''; }, 3000);
+    } else {
+      msg.innerHTML = '<span class="text-red-600 font-medium">Failed to send message</span>';
+    }
+  } catch (err) {
+    msg.innerHTML = '<span class="text-red-600 font-medium">Server error</span>';
+  }
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  localStorage.removeItem('vibe_user');
+  window.location.href = 'index.html';
+});
+
+// Load data on page load
+loadPackages();
+loadBookings();
+</script>
+</body>
+</html>

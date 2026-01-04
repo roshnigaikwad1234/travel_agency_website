@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vibe It - Travel Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Modern Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <!-- Logo -->
+      <a href="index.html" class="navbar-logo">
+        <i class="fas fa-plane"></i>
+        <span>Vibe It</span>
+      </a>
+
+      <!-- Nav Links -->
+      <div class="navbar-links">
+        <div class="nav-item dropdown">
+          <button class="nav-link">Shop <i class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu">
+            <a href="packages.html">All Packages</a>
+            <a href="packages.html">Domestic Tours</a>
+            <a href="packages.html">International Tours</a>
+            <a href="packages.html">Adventure Trips</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <button class="nav-link">Catalog <i class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu">
+            <a href="destinations.html">Popular Destinations</a>
+            <a href="destinations.html">Budget Friendly</a>
+            <a href="destinations.html">Luxury Getaways</a>
+            <a href="destinations.html">Group Tours</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <button class="nav-link">Pages <i class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu">
+            <a href="about.html">About Us</a>
+            <a href="booking.html">Book Now</a>
+            <a href="contact.html">Contact</a>
+            <a href="dashboard.html">Dashboard</a>
+          </div>
+        </div>
+        <a href="packages.html" class="nav-link">Packages</a>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="navbar-actions">
+        <div class="search-box">
+          <input type="text" placeholder="Search destinations..." />
+          <i class="fas fa-search"></i>
+        </div>
+
+        <div class="currency-selector">
+          <select id="currencySelect">
+            <option value="INR">₹ INR</option>
+            <option value="USD">$ USD</option>
+            <option value="EUR">€ EUR</option>
+          </select>
+        </div>
+
+        <a href="dashboard.html" id="cartLink" style="display:none" class="nav-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge">0</span>
+        </a>
+
+        <div id="authButtons" style="display:flex;gap:8px">
+          <a href="login.html" class="btn-outline">Sign In</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+        </div>
+
+        <div id="userProfile" style="display:none">
+          <div class="dropdown">
+            <button id="profileBtn" class="nav-icon profile-btn">
+              <i class="fas fa-user-circle"></i>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu profile-menu">
+              <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                <div>
+                  <div id="profileName" class="profile-name"></div>
+                  <div id="profileEmail" class="profile-email"></div>
+                </div>
+              </div>
+              <a href="dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+              <a href="dashboard.html"><i class="fas fa-calendar"></i> My Bookings</a>
+              <a href="dashboard.html"><i class="fas fa-cog"></i> Settings</a>
+              <hr style="margin:8px 0;border:none;border-top:1px solid #eee">
+              <button id="logoutBtn" style="width:100%;padding:10px;background:#ff6b6b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Make Your Tour Amazing</h1>
+      <p>Explore the most beautiful destinations and create unforgettable memories with Vibe It Travel Agency. Travel like you've never traveled before.</p>
+      <a href="packages.html" class="btn-hero">Shop Now</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80" alt="Hero">
+  </section>
+
+  <!-- Featured Offers Section -->
+  <section id="offers" class="section">
+    <div class="container">
+      <h2 class="section-title">Featured Offers</h2>
+      <div class="offers-grid">
+        <div class="offer-card">
+          <div class="offer-image">
+            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=500&q=60" alt="Trekking">
+            <span class="discount-badge">50% OFF</span>
+          </div>
+          <h3>Trekking All Products</h3>
+          <p class="offer-desc">Explore amazing trails</p>
+          <a href="packages.html" class="btn-small">Shop Now</a>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=60" alt="Shoes">
+            <span class="discount-badge">35% OFF</span>
+          </div>
+          <h3>Hiking Shoes</h3>
+          <p class="offer-desc">Comfortable & durable</p>
+          <a href="packages.html" class="btn-small">Shop Now</a>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-image">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=500&q=60" alt="Camping">
+            <span class="discount-badge">40% OFF</span>
+          </div>
+          <h3>Camping Gear</h3>
+          <p class="offer-desc">Premium quality gear</p>
+          <a href="packages.html" class="btn-small">Shop Now</a>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-image">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=60" alt="Beach">
+            <span class="discount-badge">25% OFF</span>
+          </div>
+          <h3>Beach Packages</h3>
+          <p class="offer-desc">Relax by the shore</p>
+          <a href="packages.html" class="btn-small">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals Section -->
+  <section id="arrivals" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Latest Arrivals</h2>
+      <div class="arrivals-grid" id="arrivalsGrid">
+        <p style="text-align:center;color:#666">Loading packages...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Never Stop Exploring</h2>
+          <p>We are a boutique travel agency dedicated to creating unforgettable journeys. From handpicked destinations to curated packages, we handle every detail so you can relax and explore with confidence.</p>
+          <ul class="about-list">
+            <li><i class="fas fa-check"></i> Personalized itineraries</li>
+            <li><i class="fas fa-check"></i> Trusted local partners</li>
+            <li><i class="fas fa-check"></i> 24/7 customer support</li>
+          </ul>
+          <a href="packages.html" class="btn-primary">Explore Packages</a>
+        </div>
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80" alt="About">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <i class="fas fa-plane"></i>
+            <span>Vibe It</span>
+          </div>
+          <p>Creating extraordinary travel experiences worldwide. Your gateway to adventure awaits.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p>📞 +91 12345 67890</p>
+          <p>📧 info@vibeit.com</p>
+          <p>📍 Mumbai, India</p>
+        </div>
+        <div>
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Vibe It Travel Agency. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Profile & Auth Logic
+    (() => {
+      const user = JSON.parse(localStorage.getItem('vibe_user') || 'null');
+      const authButtons = document.getElementById('authButtons');
+      const userProfile = document.getElementById('userProfile');
+      const profileBtn = document.getElementById('profileBtn');
+      const profileMenu = profileBtn?.nextElementSibling;
+
+      if (user && userProfile) {
+        authButtons.style.display = 'none';
+        userProfile.style.display = 'flex';
+        document.getElementById('profileName').textContent = user.name;
+        document.getElementById('profileEmail').textContent = user.email;
+
+        profileBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          profileMenu?.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => profileMenu?.classList.add('hidden'));
+
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+          localStorage.removeItem('vibe_user');
+          window.location.href = 'index.html';
+        });
+      }
+    })();
+
+    // Load Arrivals
+    const API = "http://localhost:5000/api";
+    async function loadArrivals() {
+      try {
+        const res = await fetch(`${API}/packages`);
+        const packages = await res.json();
+        const grid = document.getElementById('arrivalsGrid');
+        grid.innerHTML = '';
+
+        if (!packages || packages.length === 0) {
+          grid.innerHTML = '<p style="text-align:center;color:#666">No packages available yet.</p>';
+          return;
+        }
+
+        packages.slice(0, 6).forEach(pkg => {
+          const card = document.createElement('div');
+          card.className = 'arrival-card';
+          card.innerHTML = `
+            <div class="arrival-image">
+              <img src="${pkg.imageUrl || 'https://via.placeholder.com/400x250'}" alt="${pkg.name}">
+            </div>
+            <h3>${pkg.name}</h3>
+            <p>${pkg.description || 'Amazing destination'}</p>
+            <div class="arrival-price">₹${pkg.price}</div>
+            <a href="booking.html" class="btn-small">Book Now</a>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Error loading packages:', err);
+        document.getElementById('arrivalsGrid').innerHTML = '<p style="text-align:center;color:#999">Unable to load packages.</p>';
+      }
+    }
+
+    loadArrivals();
+  </script>
+</body>
+</html>

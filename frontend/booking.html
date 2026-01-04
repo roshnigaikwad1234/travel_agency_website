@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book · Vibe It Travel Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .container { max-width: 800px; margin: 50px auto; padding:20px; }
+    .card { background:var(--card); padding:25px; border-radius:10px; box-shadow:0 6px 30px rgba(18,53,36,0.3); color:var(--card-text) }
+    .form-row { margin-bottom:15px; display:flex; flex-direction:column; }
+    .form-row label { margin-bottom:5px; font-weight:600; color:var(--card-text) }
+    .form-row input, .form-row textarea { padding:10px; border-radius:5px; border:1px solid rgba(255,255,255,0.06); font-size:16px; background:transparent; color:var(--card-text) }
+    .form-row textarea { resize:vertical; min-height:80px; }
+    .btn { display:inline-block; padding:12px 20px; border:none; border-radius:6px; cursor:pointer; font-weight:600; }
+    .btn.large { width:100%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; font-size:16px; transition:0.2s; }
+    .btn.large:hover { filter:brightness(0.95); }
+    h2 { margin-bottom:20px; color:var(--text); }
+    .info { margin-top:10px; color:var(--accent-2); font-weight:500; }
+    .topbar { background:linear-gradient(90deg, rgba(255,138,0,0.08), rgba(46,125,50,0.04)); color:var(--text); padding:15px 0; }
+    .topbar .brand { font-weight:700; font-size:20px; color:var(--text) }
+    .topbar nav a { color:var(--text); text-decoration:none; margin-left:20px; font-weight:500; }
+  </style>
+</head>
+<body class="body-bg">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">Vibe It Travel Agency</div>
+      <nav class="nav"><a href="index.html">Home</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2 id="welcomeUser">Book Your Trip</h2>
+      <form id="quickBookingForm" class="card">
+        <div class="form-row">
+          <label for="qname">Name</label>
+          <input id="qname" name="name" required>
+        </div>
+        <div class="form-row">
+          <label for="qemail">Email</label>
+          <input id="qemail" name="email" type="email" required>
+        </div>
+        <div class="form-row">
+          <label for="qphone">Phone</label>
+          <input id="qphone" name="phone" maxlength="10" required>
+        </div>
+        <div class="form-row">
+          <label for="qpackage">Package</label>
+          <input id="qpackage" name="package" required>
+        </div>
+        <div class="form-row">
+          <label for="qdate">Date</label>
+          <input id="qdate" name="date" type="date" required>
+        </div>
+        <div class="form-row">
+          <label for="qpeople">People</label>
+          <input id="qpeople" name="people" type="number" min="1" value="1" required>
+        </div>
+        <div class="form-row">
+          <label for="qmessage">Message</label>
+          <textarea id="qmessage" name="message"></textarea>
+        </div>
+        <button class="btn large" type="submit">Book Now</button>
+        <div id="quickMsg" class="info"></div>
+        <div class="form-row">
+  <label for="qpackage">Package</label>
+  <select id="qpackage" name="package" required>
+    <option value="">Select a package</option>
+  </select>
+</div>
+
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Prefill logged-in user info
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('vibe_user') || 'null');
+      if (!user) {
+        alert("Please login first");
+        window.location.href = "login.html";
+        return;
+      }
+
+      document.getElementById('welcomeUser').textContent = `Welcome, ${user.name}! Book your trip now 🧳`;
+      document.getElementById('qname').value = user.name;
+      document.getElementById('qemail').value = user.email;
+    });
+
+    // Booking form submission
+    document.getElementById('quickBookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const user = JSON.parse(localStorage.getItem('vibe_user') || 'null');
+      if (!user) return alert("Please login first");
+
+      const name = document.getElementById('qname').value.trim();
+      const email = document.getElementById('qemail').value.trim();
+      const phone = document.getElementById('qphone').value.trim();
+      const pkg = document.getElementById('qpackage').value.trim();
+      const date = document.getElementById('qdate').value;
+      const people = Number(document.getElementById('qpeople').value);
+      const message = document.getElementById('qmessage').value.trim();
+
+      // Validations
+      if (!/^[A-Za-z\s]+$/.test(name)) return alert("Name must contain letters and spaces only");
+      if (!/^\d{10}$/.test(phone)) return alert("Phone must be 10 digits");
+      if (!pkg || !date || people < 1) return alert("Please fill all required fields");
+
+      const bookingData = { name, email, phone, package: pkg, date, people, message };
+
+      try {
+        const res = await fetch("http://localhost:5000/api/bookings", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData)
+        });
+        const json = await res.json();
+        if (res.ok) {
+          document.getElementById('quickMsg').textContent = "Booking successful!";
+          e.target.reset();
+          setTimeout(() => { document.getElementById('quickMsg').textContent = ""; }, 3000);
+        } else {
+          document.getElementById('quickMsg').textContent = json.error || "Booking failed";
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('quickMsg').textContent = "Server error. Try again.";
+      }
+    });
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
