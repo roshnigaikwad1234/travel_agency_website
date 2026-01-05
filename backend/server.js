@@ -1,4 +1,5 @@
 // server.js
+
 require("dotenv").config();
 
 const express = require('express');
@@ -11,6 +12,10 @@ const userRouter = require('./routes/user');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.get("/api/test", (req, res) => {
+  res.send("API WORKING ✅");
+});
+
 
 // MongoDB connection (local or Atlas)
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/travelAgency';
