@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Package = require("../models/Package");
 
+
 // Add new travel package
 router.post("/", async (req, res) => {
   try {
