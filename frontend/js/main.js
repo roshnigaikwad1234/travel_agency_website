@@ -1,6 +1,6 @@
 // main.js - Travel Agency Frontend Connected to Backend
 
-const API = "http://localhost:5000/api";
+const API = "https://travelagencywebsite-production.up.railway.app/api";
 
 // -------------------------
 // Load packages dynamically when on packages.html
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Populate package dropdown dynamically
 const packageSelect = document.getElementById('qpackage');
 if (packageSelect) {
-  fetch('http://localhost:5000/api/packages')
+  fetch(`${API}/packages`)
     .then(res => res.json())
     .then(packages => {
       packages.forEach(pkg => {
